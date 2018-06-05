@@ -1,0 +1,1 @@
+Expensify is a expense calculator app built in react with react-router, login, authentication and other features
