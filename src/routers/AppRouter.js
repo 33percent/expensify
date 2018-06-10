@@ -17,7 +17,7 @@ import Header from '../components/Header';
         <Switch>
         <Route path="/" component={expensehome} exact={true}/>
         <Route path="/create" component={addexpense} />
-        <Route path="/edit" component={editexpense} />
+        <Route path="/edit/:id" component={editexpense} />
         <Route path="/help" component={help} />
         <Route component={notfound} />
         </Switch>
