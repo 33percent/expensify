@@ -3,6 +3,33 @@ import {
     combineReducers
 } from "redux";
 
+import uuidv4 from 'uuid/v1';
+import crypto from 'crypto';
+
+
+const addExpense = ({
+    description = "",
+    note = '',
+    amount = 0,
+    createdAt = 0
+} = {}) => ({
+    type: "ADD_EXPENSE",
+    expense: {
+        id: crypto.randomBytes(16).toString("hex"),
+        description,
+        note,
+        amount,
+        createdAt
+    }
+});
+
+const removeExpense = ({
+    id
+} = {}) => ({
+    type: "REMOVE_EXPENSE",
+    id
+})
+
 const demostate = {
     expenses: [{
         id: "myone",
@@ -26,7 +53,18 @@ const expensesReducerDefault = []
 
 const expensesReducer = (state = expensesReducerDefault, action) => {
     switch (action.type) {
-        default: return state;
+        case "ADD_EXPENSE":
+            return [
+                ...state,
+                action.expense
+            ];
+
+        case "REMOVE_EXPENSE":
+            return state.filter(({
+                id
+            }) => id !== action.id);
+        default:
+            return state;
     }
 };
 
@@ -51,4 +89,22 @@ const store = createStore(
     })
 );
 
-console.log(store.getState());
+store.subscribe(() => {
+    console.log(store.getState());
+})
+
+const expenseA = store.dispatch(addExpense({
+    description: "My new",
+    amount: 100
+}));
+
+const expenseB = store.dispatch(addExpense({
+    description: "Coffee",
+    amount: 500
+}));
+
+store.dispatch(removeExpense({
+    id: expenseA.expense.id
+}));
+
+console.log(store.getState())
