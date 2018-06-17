@@ -1,57 +1,66 @@
-import { createStore } from 'redux';
+import {
+  createStore
+} from 'redux';
 
-const incrementCount = ({incrementBy = 1} = {}) => ({
-    type:"INCREMENT",
-    incrementBy
+const incrementCount = ({
+  incrementBy = 1
+} = {}) => ({
+  type: "INCREMENT",
+  incrementBy
 });
 
-const decrementCount = ({decrementBy = 1} = {}) => ({
-type:"DECREMENT",
-decrementBy
+const decrementCount = ({
+  decrementBy = 1
+} = {}) => ({
+  type: "DECREMENT",
+  decrementBy
 })
 
 const resetCount = () => ({
-type:"RESET"
+  type: "RESET"
 });
 
-const setCount = ({count=1}) => ({
-    type:"SET",
-    count
+const setCount = ({
+  count = 1
+}) => ({
+  type: "SET",
+  count
 })
 
-const store = createStore((state = { count: 0 }, action) => {
+const countreducer = (state = {
+  count: 0
+}, action) => {
   switch (action.type) {
-    case 'INCREMENT':
-      return {
-        count: state.count + action.incrementBy
-      };
-    case 'DECREMENT':
-      return {
-        count: state.count - action.decrementBy
-      };
-    case 'SET':
-      return {
-        count: action.count
-      };
-    case 'RESET':
-      return {
-        count: 0
-      };
-    default:
-      return state;
+      case 'INCREMENT':
+          return {
+              count: state.count + action.incrementBy
+          };
+      case 'DECREMENT':
+          return {
+              count: state.count - action.decrementBy
+          };
+      case 'SET':
+          return {
+              count: action.count
+          };
+      case 'RESET':
+          return {
+              count: 0
+          };
+      default:
+          return state;
   }
-});
+};
+
+const store = createStore(countreducer);
 
 const unsubscribe = store.subscribe(() => {
   console.log(store.getState());
 });
 
-// store.dispatch({
-//   type: 'INCREMENT',
-//   incrementBy: 5
-// });
-
-store.dispatch(incrementCount({incrementBy:5}));
+store.dispatch(incrementCount({
+  incrementBy: 5
+}));
 
 store.dispatch(incrementCount());
 
@@ -59,6 +68,10 @@ store.dispatch(resetCount());
 
 store.dispatch(decrementCount());
 
-store.dispatch(decrementCount({decrementBy:10}));
+store.dispatch(decrementCount({
+  decrementBy: 10
+}));
 
-store.dispatch(setCount({count: -100}));
+store.dispatch(setCount({
+  count: -100
+}));
