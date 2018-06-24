@@ -20,7 +20,7 @@ const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
 console.log(visibleExpenses);
 
 setTimeout(function(){
-store.dispatch(setTextFilter('wasdas'))
+store.dispatch(setTextFilter('bill'))
 },3000)
 
 
